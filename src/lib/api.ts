@@ -9,7 +9,7 @@ const BASE_URLS = [
 ];
 
 // Simple health tracking for the primary API
-const COOLDOWN_DURATION = 60 * 1000; // 1 minute
+const COOLDOWN_DURATION = 10 * 60 * 1000; // 10 minutes
 let primaryApiLastFailure = 0;
 
 export const resetApiCooldown = () => {
@@ -53,7 +53,7 @@ const fetchWithFallback = async <T>(
     
     toast.success("Backup fetch successful", {
       id: "api-backup-success",
-      description: "Data loaded from mirror. We will try the main server again in 1 minute.",
+      description: "Data loaded from mirror. We will try the main server again in 10 minutes.",
       duration: 5000,
     });
 

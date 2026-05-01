@@ -1,49 +1,83 @@
-import { cn } from "@/lib/utils";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Portal, PortalBackdrop } from "@/components/ui/portal";
 import { Button } from "@/components/ui/button";
 import { navLinks } from "@/constants/navigation";
-import { XIcon, MenuIcon } from "lucide-react";
+import { MenuIcon, XIcon } from "lucide-react";
+import {
+	Drawer,
+	DrawerContent,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerDescription,
+	DrawerTrigger,
+	DrawerClose,
+} from "@/components/ui/drawer";
 
 export function MobileNav() {
 	const [open, setOpen] = React.useState(false);
 
 	return (
 		<div className="md:hidden">
-			<Button
-				aria-controls="mobile-menu"
-				aria-expanded={open}
-				aria-label="Toggle menu"
-				className="md:hidden size-9 bg-transparent border-foreground hover:bg-black/5 dark:hover:bg-white/10"
-				onClick={() => setOpen(!open)}
-				size="icon"
-				variant="outline"
-			>
-				{open ? (
-					<XIcon className="size-4.5" />
-				) : (
-					<MenuIcon className="size-4.5" />
-				)}
-			</Button>
-			{open && (
-				<Portal className="top-14" id="mobile-menu">
-					<PortalBackdrop />
-					<div
-						className={cn(
-							"data-[slot=open]:zoom-in-97 ease-out data-[slot=open]:animate-in",
-							"size-full p-4"
-						)}
-						data-slot={open ? "open" : "closed"}
+			<Drawer open={open} onOpenChange={setOpen}>
+				<DrawerTrigger asChild>
+					<Button
+						aria-label="Toggle menu"
+						className="size-9 bg-transparent hover:bg-black/5 dark:hover:bg-white/10"
+						size="icon"
+						variant="outline"
 					>
-						<div className="grid gap-y-2">
-							{navLinks.map((link) => (
-								<Button className="justify-start" key={link.label} variant="ghost" render={<Link to={link.href} onClick={() => setOpen(false)} />} nativeButton={false}>{link.label}</Button>
-							))}
-						</div>
-					</div>
-				</Portal>
-			)}
+						{open ? (
+							<XIcon className="size-4.5" />
+						) : (
+							<MenuIcon className="size-4.5" />
+						)}
+					</Button>
+				</DrawerTrigger>
+				<DrawerContent className="p-4 pb-10">
+					<DrawerHeader className="mb-4 flex flex-row items-center justify-between px-2 text-left">
+						<DrawerTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+							Navigate
+						</DrawerTitle>
+						<DrawerDescription className="sr-only">
+							Mobile navigation menu
+						</DrawerDescription>
+						<DrawerClose asChild>
+							<Button
+								variant="ghost"
+								size="icon"
+								className="size-8 rounded-full"
+								autoFocus
+							>
+								<XIcon className="size-4" />
+							</Button>
+						</DrawerClose>
+					</DrawerHeader>
+
+					<nav className="flex flex-col gap-1">
+						{navLinks.map((link) => {
+							const Icon = link.icon;
+							return (
+								<Link
+									className="flex items-center gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-muted active:bg-muted/80"
+									to={link.href}
+									key={link.label}
+									onClick={() => setOpen(false)}
+								>
+									<span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted/50 border border-border/50">
+										<Icon className="size-5" />
+									</span>
+									<span className="flex flex-col text-left">
+										<span className="text-sm font-semibold">{link.label}</span>
+										<span className="text-xs text-muted-foreground">
+											{link.description}
+										</span>
+									</span>
+								</Link>
+							);
+						})}
+					</nav>
+				</DrawerContent>
+			</Drawer>
 		</div>
 	);
 }
