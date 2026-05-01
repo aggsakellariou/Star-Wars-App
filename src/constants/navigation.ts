@@ -1,6 +1,6 @@
 export const navLinks = [
   {
-    label: "People",
+    label: "Characters",
     href: "/people",
   },
   {

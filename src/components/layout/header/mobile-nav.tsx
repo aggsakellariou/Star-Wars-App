@@ -15,7 +15,7 @@ export function MobileNav() {
 				aria-controls="mobile-menu"
 				aria-expanded={open}
 				aria-label="Toggle menu"
-				className="md:hidden"
+				className="md:hidden size-9 bg-transparent border-foreground hover:bg-black/5 dark:hover:bg-white/10"
 				onClick={() => setOpen(!open)}
 				size="icon"
 				variant="outline"

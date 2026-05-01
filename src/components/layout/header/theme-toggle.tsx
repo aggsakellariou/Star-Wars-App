@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
-import { CustomButton } from "@/components/ui/custom/custom-button"
+import { Button } from "@/components/ui/button"
 import { Sun, Moon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -28,14 +28,14 @@ export function ThemeToggle() {
   // To prevent hydration warnings
   if (!isMounted) {
     return (
-      <CustomButton
-        variant="gray"
-        size="sm"
+      <Button
+        variant="ghost"
+        size="icon"
         disabled
-        className="group relative size-9"
+        className="group relative size-9 hover:bg-black/5 dark:hover:bg-white/10"
       >
         <span className="sr-only">Toggle theme</span>
-      </CustomButton>
+      </Button>
     )
   }
 
@@ -43,11 +43,11 @@ export function ThemeToggle() {
   const currentTheme = resolvedTheme || theme
 
   return (
-    <CustomButton
-      variant="gray"
-      size="sm"
+    <Button
+      variant="ghost"
+      size="icon"
       onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-      className="group relative size-9 cursor-pointer visible animate-in fade-in duration-200"
+      className="group relative size-9 cursor-pointer visible animate-in fade-in duration-200 hover:bg-black/5 dark:hover:bg-white/10"
       aria-label={`Switch to ${currentTheme === "dark" ? "light" : "dark"} mode`}
     >
       <Sun
@@ -67,6 +67,6 @@ export function ThemeToggle() {
         )}
       />
       <span className="sr-only">Toggle theme</span>
-    </CustomButton>
+    </Button>
   )
 }

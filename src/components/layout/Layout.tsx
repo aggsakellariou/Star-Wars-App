@@ -1,16 +1,14 @@
-import { Outlet } from "react-router-dom";
-import { Header } from "@/components/header";
+import { Outlet, useLocation } from "react-router-dom";
+import { Header } from "@/components/layout/header/header";
 
 export function Layout() {
+	const location = useLocation();
+	const isHome = location.pathname === "/";
+
 	return (
-		<div className="flex min-h-screen flex-col bg-background text-foreground">
+		<div className={`flex min-h-screen flex-col ${isHome ? "bg-[hsl(var(--sw-yellow))]" : "bg-background"} text-foreground`}>
 			<Header />
-			<main className="flex-1 container mx-auto px-4 py-8 max-w-4xl">
-				<Outlet />
-			</main>
-			<footer className="border-t py-6 text-center text-sm text-muted-foreground">
-				<p>&copy; {new Date().getFullYear()} Star Wars Explorer. All rights reserved.</p>
-			</footer>
+			<Outlet />
 		</div>
 	);
 }

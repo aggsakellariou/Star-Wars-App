@@ -65,19 +65,23 @@ export default function ListPage({ type }: ListPageProps) {
   const title = type === "films" ? "Films" : "Characters";
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-700">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-        <p className="text-muted-foreground">
-          Browse and filter the list of {title.toLowerCase()} from the Star Wars universe.
-        </p>
-      </div>
+    <div className="flex flex-col h-full w-full px-4">
+      <div className="w-full max-w-5xl mx-auto py-6">
+        <div className="space-y-6 animate-in fade-in duration-700">
+          <div className="space-y-1"> 
+            <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
+            <p className="text-muted-foreground">
+              Browse and filter the list of {title.toLowerCase()} from the Star Wars universe.
+            </p>
+          </div>
 
-      {type === "films" ? (
-        <FilmGrid data={dummyFilms} />
-      ) : (
-        <PeopleGrid data={dummyPeople} />
-      )}
+          {type === "films" ? (
+            <FilmGrid data={dummyFilms} />
+          ) : (
+            <PeopleGrid data={dummyPeople} />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
