@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# Star Wars App (SWAPI)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application built with TypeScript that interacts with the Star Wars API (SWAPI) to display information about characters and films, featuring a favorites system with persistent storage.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Dashboard**: Overview of galaxy statistics and quick access to resources.
+- **Characters List**: Paginated list of Star Wars characters with debounced search functionality.
+- **Films List**: Paginated list of Star Wars films with debounced search functionality.
+- **Resource Details**: Comprehensive view of all properties for any character or film.
+- **Favorites System**: Mark any resource as a favorite. Favorites are persisted in the browser's `localStorage`.
+- **Responsive Design**: Fully responsive UI built with Tailwind CSS 4, optimized for both desktop and mobile viewports.
+- **Robust Data Fetching**: Powered by TanStack Query (React Query) for efficient caching, loading states, and error handling.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React 19
+- **Build Tool**: Vite
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **State Management**: Zustand (for favorites)
+- **Data Fetching**: TanStack Query & Axios
+- **Icons**: Lucide React
+- **Testing**: Vitest & React Testing Library
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js (v18 or higher)
+- pnpm (recommended) or npm/yarn
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/aggsakellariou/Star-Wars-App.git
+   cd swapi-app
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Run the development server:
+   ```bash
+   pnpm dev
+   ```
+
+4. Open your browser to `http://localhost:5173`
+
+### Running Tests
+
+To run the unit tests:
+```bash
+pnpm test
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+To run tests in watch mode:
+```bash
+pnpm vitest
 ```
+
+## Project Structure
+
+- `src/api`: SWAPI integration using Axios.
+- `src/components`: Reusable UI components (Layout, ResourceCard, etc.).
+- `src/pages`: Main application views (Home, ResourceList, ResourceDetail, Favorites).
+- `src/store`: Zustand store for state management.
+- `src/types`: TypeScript interfaces for API responses and application data.
+- `src/test`: Testing configuration and setup.

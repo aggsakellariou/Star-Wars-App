@@ -1,5 +1,4 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { DataTableColumnHeader } from "@/components/grid/DataTableColumnHeader";
 
 export interface Film {
   title: string
@@ -21,28 +20,20 @@ export interface Film {
 export const filmColumns: ColumnDef<Film>[] = [
   {
     accessorKey: "title",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
-    ),
+    header: "Title",
     cell: ({ row }) => <div className="font-semibold">{row.getValue("title")}</div>,
   },
   {
     accessorKey: "episode_id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Episode" />
-    ),
+    header: "Episode",
   },
   {
     accessorKey: "director",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Director" />
-    ),
+    header: "Director",
   },
   {
     accessorKey: "release_date",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Release Date" />
-    ),
+    header: "Release Date",
   },
   {
     accessorKey: "producer",

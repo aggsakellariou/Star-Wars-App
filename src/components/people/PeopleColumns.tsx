@@ -1,5 +1,4 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { DataTableColumnHeader } from "@/components/grid/DataTableColumnHeader";
 
 export interface Person {
   name: string
@@ -21,16 +20,12 @@ export interface Person {
 export const peopleColumns: ColumnDef<Person>[] = [
   {
     accessorKey: "name",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
-    ),
+    header: "Name",
     cell: ({ row }) => <div className="font-semibold">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "age",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Age" />
-    ),
+    header: "Age",
     accessorFn: (row) => 
       row.birth_year === "unknown" 
         ? "Unknown" 
@@ -38,33 +33,23 @@ export const peopleColumns: ColumnDef<Person>[] = [
   },
   {
     accessorKey: "gender",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Gender" />
-    ),
+    header: "Gender",
   },
   {
     accessorKey: "height",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Height" />
-    ),
+    header: "Height",
   },
   {
     accessorKey: "mass",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Mass" />
-    ),
+    header: "Mass",
   },
   {
     accessorKey: "skin_color",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Skin Color" />
-    ),
+    header: "Skin Color",
   },
   {
     accessorKey: "films_count",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Films" />
-    ),
+    header: "Films",
     accessorFn: (row) => row.films.length,
   },
 ];
