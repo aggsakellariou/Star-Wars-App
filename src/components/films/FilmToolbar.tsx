@@ -1,6 +1,4 @@
-import * as React from "react";
 import type { Table } from "@tanstack/react-table";
-
 import { Input } from "@/components/ui/input";
 import { Selector } from "@/components/grid/selectors/Selector";
 import { DataTableResetFilter } from "@/components/grid/DataTableResetFilter";
@@ -8,20 +6,17 @@ import { DataTableResetFilter } from "@/components/grid/DataTableResetFilter";
 interface FilmToolbarProps<TData> {
   table: Table<TData>;
   searchPlaceholder?: string;
+  search: string;
+  onSearchChange: (search: string) => void;
 }
 
 export function FilmToolbar<TData>({
   table,
   searchPlaceholder = "Search films by title...",
+  search,
+  onSearchChange,
 }: FilmToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0;
-  const [displayValue, setDisplayValue] = React.useState<string>(
-    (table.getColumn("title")?.getFilterValue() as string) ?? "",
-  );
-
-  React.useEffect(() => {
-    table.getColumn("title")?.setFilterValue(displayValue);
-  }, [displayValue, table]);
+  const isFiltered = table.getState().columnFilters.length > 0 || search !== "";
 
   const filters = (
     <>
@@ -81,7 +76,7 @@ export function FilmToolbar<TData>({
         isFiltered={isFiltered}
         onReset={() => {
           table.resetColumnFilters();
-          setDisplayValue("");
+          onSearchChange("");
         }}
       />
     </>
@@ -91,9 +86,9 @@ export function FilmToolbar<TData>({
     <div className="flex flex-wrap items-center gap-2">
       <Input
         placeholder={searchPlaceholder}
-        value={displayValue}
+        value={search}
         onChange={(event) => {
-          setDisplayValue(event.target.value);
+          onSearchChange(event.target.value);
         }}
         className="h-8 flex-1 min-w-[200px]"
       />

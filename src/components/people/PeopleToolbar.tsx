@@ -1,6 +1,4 @@
-import * as React from "react";
 import type { Table } from "@tanstack/react-table";
-
 import { Input } from "@/components/ui/input";
 import { Selector } from "@/components/grid/selectors/Selector";
 import { DataTableResetFilter } from "@/components/grid/DataTableResetFilter";
@@ -8,20 +6,17 @@ import { DataTableResetFilter } from "@/components/grid/DataTableResetFilter";
 interface PeopleToolbarProps<TData> {
   table: Table<TData>;
   searchPlaceholder?: string;
+  search: string;
+  onSearchChange: (search: string) => void;
 }
 
 export function PeopleToolbar<TData>({
   table,
   searchPlaceholder = "Search characters by name...",
+  search,
+  onSearchChange,
 }: PeopleToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0;
-  const [displayValue, setDisplayValue] = React.useState<string>(
-    (table.getColumn("name")?.getFilterValue() as string) ?? "",
-  );
-
-  React.useEffect(() => {
-    table.getColumn("name")?.setFilterValue(displayValue);
-  }, [displayValue, table]);
+  const isFiltered = table.getState().columnFilters.length > 0 || search !== "";
 
   const filters = (
     <>
@@ -67,7 +62,7 @@ export function PeopleToolbar<TData>({
         isFiltered={isFiltered}
         onReset={() => {
           table.resetColumnFilters();
-          setDisplayValue("");
+          onSearchChange("");
         }}
       />
     </>
@@ -77,9 +72,9 @@ export function PeopleToolbar<TData>({
     <div className="flex flex-wrap items-center gap-2">
       <Input
         placeholder={searchPlaceholder}
-        value={displayValue}
+        value={search}
         onChange={(event) => {
-          setDisplayValue(event.target.value);
+          onSearchChange(event.target.value);
         }}
         className="h-8 flex-1 min-w-[200px]"
       />

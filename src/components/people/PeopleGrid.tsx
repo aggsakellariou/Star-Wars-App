@@ -1,7 +1,6 @@
 import {
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -11,23 +10,68 @@ import { peopleColumns, type Person } from "./PeopleColumns"
 import { PersonCard } from "./PersonCard"
 import { EmptyState } from "@/components/ui/custom/EmptyState"
 import { Search } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface PeopleGridProps {
   data: Person[]
+  rowCount: number
+  page: number
+  pageSize: number
+  onPageChange: (page: number) => void
+  onPageSizeChange: (pageSize: number) => void
+  onSearchChange: (search: string) => void
+  search: string
+  isLoading?: boolean
 }
 
-export function PeopleGrid({ data }: PeopleGridProps) {
+export function PeopleGrid({ 
+  data, 
+  rowCount, 
+  page, 
+  pageSize,
+  onPageChange, 
+  onPageSizeChange,
+  onSearchChange, 
+  search,
+  isLoading 
+}: PeopleGridProps) {
   const table = useReactTable({
     data,
     columns: peopleColumns,
+    pageCount: Math.ceil(rowCount / pageSize),
+    state: {
+      pagination: {
+        pageIndex: page - 1,
+        pageSize: pageSize,
+      },
+    },
+    onPaginationChange: (updater) => {
+      const nextState = typeof updater === "function" 
+        ? updater({ pageIndex: page - 1, pageSize: pageSize }) 
+        : updater;
+      
+      if (nextState.pageIndex !== page - 1) {
+        onPageChange(nextState.pageIndex + 1);
+      }
+      if (nextState.pageSize !== pageSize) {
+        onPageSizeChange(nextState.pageSize);
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    manualPagination: true,
   })
 
   return (
-    <div className="space-y-4 animate-in fade-in duration-500">
-      <PeopleToolbar table={table} />
+    <div className={cn(
+      "space-y-4 animate-in fade-in duration-500",
+      isLoading && "opacity-50 pointer-events-none transition-opacity"
+    )}>
+      <PeopleToolbar 
+        table={table} 
+        search={search}
+        onSearchChange={onSearchChange}
+      />
       
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {table.getRowModel().rows?.length ? (
@@ -44,7 +88,7 @@ export function PeopleGrid({ data }: PeopleGridProps) {
         )}
       </div>
 
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} pageSizeOptions={[10, 20, 30, 40, 50]} />
     </div>
   )
 }
