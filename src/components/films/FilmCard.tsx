@@ -6,10 +6,10 @@ const idOf = (film: Film) => film.url.split("/").filter(Boolean).pop();
 export function FilmCard({ film }: { film: Film }) {
   const id = idOf(film);
   return (
-    <Link to={`/films/${id}`} className="block bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] border-[5px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-bg))] hover:text-[hsl(var(--sw-yellow))] transition group">
-      <div className="border-b-[5px] border-[hsl(var(--sw-bg))] group-hover:border-[hsl(var(--sw-yellow))] flex">
+    <Link to={`/films/${id}`} className="block bg-primary text-secondary border-[5px] border-secondary hover:bg-secondary hover:text-primary transition group">
+      <div className="border-b-[5px] border-secondary group-hover:border-primary flex">
         <div className="font-display text-5xl px-4 py-2 leading-none">{film.episode_id}</div>
-        <div className="flex-1 border-l-[5px] border-[hsl(var(--sw-bg))] group-hover:border-[hsl(var(--sw-yellow))] p-3 flex flex-col justify-between">
+        <div className="flex-1 border-l-[5px] border-secondary group-hover:border-primary p-3 flex flex-col justify-between">
           <span className="font-mono-sw text-[10px]">EPISODE</span>
           <span className="font-mono-sw text-xs">{film.release_date}</span>
         </div>

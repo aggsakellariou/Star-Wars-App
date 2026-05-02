@@ -64,11 +64,10 @@ export function FilmGrid({
 
   return (
     <div className={cn(
-      "space-y-4 animate-in fade-in duration-500",
+      "space-y-4",
       isLoading && "opacity-50 pointer-events-none transition-opacity"
     )}>
       <FilmToolbar 
-        table={table} 
         search={search}
         onSearchChange={onSearchChange}
       />

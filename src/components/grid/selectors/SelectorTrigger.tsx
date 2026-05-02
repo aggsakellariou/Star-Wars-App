@@ -29,7 +29,7 @@ export function SelectorTrigger<T = string>({
       data-testid={triggerTestId}
       disabled={disabled}
       className={cn(
-        "h-8 px-3 bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-yellow))] hover:text-[hsl(var(--sw-bg))] transition-colors flex items-center gap-2 font-display text-xs uppercase cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
+        "h-8 px-3 bg-secondary text-primary border-[3px] border-secondary hover:bg-primary hover:text-secondary transition-colors flex items-center gap-2 font-display text-xs uppercase cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
         className,
       )}
       {...props}
@@ -40,21 +40,21 @@ export function SelectorTrigger<T = string>({
         <div className="flex items-center gap-1 ml-1">
           <div className="hidden lg:flex gap-1">
             {selectedCount > 1 ? (
-              <span className="bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] px-1 font-mono-sw text-[9px] border border-[hsl(var(--sw-bg))]">
+              <span className="bg-primary text-secondary px-1 font-mono-sw text-[9px] border border-secondary">
                 {selectedCount}
               </span>
             ) : (
               selectedOptions.map((option) => (
                 <span
                   key={String(option.value)}
-                  className="bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] px-1 font-mono-sw text-[9px] border border-[hsl(var(--sw-bg))]"
+                  className="bg-primary text-secondary px-1 font-mono-sw text-[9px] border border-secondary"
                 >
                   {formatLabel ? formatLabel(option) : option.label}
                 </span>
               ))
             )}
           </div>
-          <span className="lg:hidden bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] px-1 font-mono-sw text-[9px] border border-[hsl(var(--sw-bg))]">
+          <span className="lg:hidden bg-primary text-secondary px-1 font-mono-sw text-[9px] border border-secondary">
             {selectedCount}
           </span>
         </div>

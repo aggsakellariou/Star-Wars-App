@@ -82,10 +82,10 @@ export function SelectorPopover<T = string>({
           />
         }
       />
-      <PopoverContent className="w-[250px] p-0 bg-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] rounded-none" align="start">
+      <PopoverContent className="w-[250px] p-0 bg-primary border-[3px] border-secondary rounded-none" align="start">
         <Command className="bg-transparent">
-          <div className="hidden md:block border-b-[3px] border-[hsl(var(--sw-bg))]">
-            <CommandInput placeholder={title} className="bg-transparent text-[hsl(var(--sw-bg))] font-display placeholder:text-[hsl(var(--sw-bg))/50]" />
+          <div className="hidden md:block border-b-[3px] border-secondary">
+            <CommandInput placeholder={title} className="bg-transparent text-secondary font-display placeholder:text-secondary/50" />
           </div>
           <CommandList className="max-h-[300px]">
             <CommandEmpty className="py-6 text-center text-xs font-mono-sw uppercase">{emptyMessage}</CommandEmpty>
@@ -96,16 +96,16 @@ export function SelectorPopover<T = string>({
                 return (
                   <CommandItem
                     key={String(option.value)}
-                    className="flex items-center px-3 py-2 hover:cursor-pointer aria-selected:bg-[hsl(var(--sw-bg))] aria-selected:text-[hsl(var(--sw-yellow))] transition-colors group"
+                    className="flex items-center px-3 py-2 hover:cursor-pointer aria-selected:bg-secondary aria-selected:text-primary transition-colors group"
                     disabled={isDisabled}
                     onSelect={() => !isDisabled && handleSelect(option.value)}
                   >
                     <div
                       className={cn(
-                        "flex size-4 items-center justify-center border-2 border-[hsl(var(--sw-bg))] mr-3 transition-colors",
+                        "flex size-4 items-center justify-center border-2 border-secondary mr-3 transition-colors",
                         isSelected
-                          ? "bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))]"
-                          : "bg-transparent text-transparent group-aria-selected:border-[hsl(var(--sw-yellow))]",
+                          ? "bg-secondary text-primary"
+                          : "bg-transparent text-transparent group-aria-selected:border-primary",
                       )}
                     >
                       <Check className="size-3 stroke-[3px]" />
@@ -129,11 +129,11 @@ export function SelectorPopover<T = string>({
               })}
             </CommandGroup>
             {selectedCount > 0 && (
-              <div className="border-t-[3px] border-[hsl(var(--sw-bg))]">
+              <div className="border-t-[3px] border-secondary">
                 <CommandGroup>
                   <CommandItem
                     onSelect={handleClear}
-                    className="flex items-center justify-center px-3 py-3 font-display text-xs uppercase hover:cursor-pointer aria-selected:bg-[hsl(var(--sw-bg))] aria-selected:text-[hsl(var(--sw-yellow))] transition-colors"
+                    className="flex items-center justify-center px-3 py-3 font-display text-xs uppercase hover:cursor-pointer aria-selected:bg-secondary aria-selected:text-primary transition-colors"
                   >
                     Clear filters
                   </CommandItem>

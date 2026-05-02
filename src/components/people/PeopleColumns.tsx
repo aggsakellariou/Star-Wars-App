@@ -6,7 +6,9 @@ export interface Person {
   gender: string
   height: string
   mass: string
+  hair_color: string
   skin_color: string
+  eye_color: string
   homeworld: string
   films: string[]
   species: string[]

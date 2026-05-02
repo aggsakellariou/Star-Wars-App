@@ -7,10 +7,10 @@ import { navLinks } from "@/constants/navigation";
 export function Header() {
 
 	return (
-		<header className="sticky top-0 z-50 w-full bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] border-b-[5px] border-[hsl(var(--sw-bg))] transition-all">
+		<header className="sticky top-0 z-50 w-full bg-primary text-secondary border-b-[5px] border-secondary transition-all">
 			<nav className="flex h-16 w-full items-center justify-between px-6 max-w-7xl mx-auto">
 				<Link
-					className="p-1 hover:bg-[hsl(var(--sw-bg))] hover:text-[hsl(var(--sw-yellow))] transition-colors"
+					className="p-1 hover:bg-secondary hover:text-primary transition-colors"
 					to="/"
 				>
 					<Logo className="h-6" />

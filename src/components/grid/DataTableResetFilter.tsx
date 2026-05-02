@@ -18,7 +18,7 @@ export function DataTableResetFilter({
     <button
       onClick={onReset}
       className={cn(
-        "h-8 px-3 bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-red,0_100%_50%))] border-[3px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-red,0_100%_50%))] hover:text-[hsl(var(--sw-bg))] transition-colors flex items-center gap-2 font-display text-xs uppercase cursor-pointer",
+        "h-8 px-3 bg-secondary text-[hsl(var(--destructive,0_100%_50%))] border-[3px] border-secondary hover:bg-[hsl(var(--destructive,0_100%_50%))] hover:text-secondary transition-colors flex items-center gap-2 font-display text-xs uppercase cursor-pointer",
         className
       )}
     >

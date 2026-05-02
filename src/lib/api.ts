@@ -120,3 +120,18 @@ export const fetchFilms = async (
     results: responses.flatMap(r => r.results),
   };
 };
+
+export const fetchPerson = async (id: string): Promise<Person> => {
+  const { data } = await axios.get(`${BASE_URLS[0]}/people/${id}/`);
+  return data;
+};
+
+export const fetchFilm = async (id: string): Promise<Film> => {
+  const { data } = await axios.get(`${BASE_URLS[0]}/films/${id}/`);
+  return data;
+};
+
+export const fetchResource = async <T>(url: string): Promise<T> => {
+  const { data } = await axios.get(url);
+  return data;
+};

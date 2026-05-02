@@ -1,89 +1,18 @@
-import type { Table } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
-import { Selector } from "@/components/grid/selectors/Selector";
-import { DataTableResetFilter } from "@/components/grid/DataTableResetFilter";
 
-interface FilmToolbarProps<TData> {
-  table: Table<TData>;
+interface FilmToolbarProps {
   searchPlaceholder?: string;
   search: string;
   onSearchChange: (search: string) => void;
 }
 
-export function FilmToolbar<TData>({
-  table,
+export function FilmToolbar({
   searchPlaceholder = "Search films by title...",
   search,
   onSearchChange,
-}: FilmToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0 || search !== "";
-
-  const filters = (
-    <>
-      {table.getColumn("episode_id") && (
-        <Selector
-          title="Episode"
-          options={[
-            { label: "Episode I", value: 1 },
-            { label: "Episode II", value: 2 },
-            { label: "Episode III", value: 3 },
-            { label: "Episode IV", value: 4 },
-            { label: "Episode IIV", value: 5 },
-            { label: "Episode VI", value: 6 },
-          ]}
-          value={table.getColumn("episode_id")?.getFilterValue() as number[]}
-          onValueChange={(value) =>
-            table.getColumn("episode_id")?.setFilterValue(value)
-          }
-        />
-      )}
-
-      {table.getColumn("director") && (
-        <Selector
-          title="Director"
-          options={[
-            { label: "George Lucas", value: "George Lucas" },
-            { label: "Irvin Kershner", value: "Irvin Kershner" },
-            { label: "Richard Marquand", value: "Richard Marquand" },
-            { label: "J. J. Abrams", value: "J. J. Abrams" },
-            { label: "Rian Johnson", value: "Rian Johnson" },
-          ]}
-          value={table.getColumn("director")?.getFilterValue() as string[]}
-          onValueChange={(value) =>
-            table.getColumn("director")?.setFilterValue(value)
-          }
-        />
-      )}
-
-      {table.getColumn("producer") && (
-        <Selector
-          title="Producer"
-          options={[
-            { label: "Gary Kurtz", value: "Gary Kurtz" },
-            { label: "Rick McCallum", value: "Rick McCallum" },
-            { label: "Howard G. Kazanjian", value: "Howard G. Kazanjian" },
-            { label: "George Lucas", value: "George Lucas" },
-            { label: "Kathleen Kennedy", value: "Kathleen Kennedy" },
-          ]}
-          value={table.getColumn("producer")?.getFilterValue() as string[]}
-          onValueChange={(value) =>
-            table.getColumn("producer")?.setFilterValue(value)
-          }
-        />
-      )}
-
-      <DataTableResetFilter
-        isFiltered={isFiltered}
-        onReset={() => {
-          table.resetColumnFilters();
-          onSearchChange("");
-        }}
-      />
-    </>
-  );
-
+}: FilmToolbarProps) {
   return (
-    <div className="flex flex-wrap items-center gap-4 bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] p-4 border-[5px] border-[hsl(var(--sw-bg))]">
+    <div className="flex flex-wrap items-center gap-4 bg-primary text-secondary p-4 border-[5px] border-secondary">
       <div className="flex-1 min-w-[200px] relative">
         <Input
           placeholder={searchPlaceholder}
@@ -91,10 +20,9 @@ export function FilmToolbar<TData>({
           onChange={(event) => {
             onSearchChange(event.target.value);
           }}
-          className="h-10 bg-transparent text-[hsl(var(--sw-bg))] border-[3px] border-[hsl(var(--sw-bg))] rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-[hsl(var(--sw-bg))/60] font-mono-sw text-xs uppercase px-4"
+          className="h-10 bg-transparent text-secondary border-[3px] border-secondary rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-secondary/60 font-mono-sw text-xs uppercase px-4"
         />
       </div>
-      <div className="flex flex-wrap items-center gap-2">{filters}</div>
     </div>
   );
 }

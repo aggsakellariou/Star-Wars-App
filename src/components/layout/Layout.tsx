@@ -6,7 +6,7 @@ export function Layout() {
 	const isHome = location.pathname === "/";
 
 	return (
-		<div className={`flex min-h-screen flex-col ${isHome ? "bg-[hsl(var(--sw-yellow))]" : "bg-background"} text-foreground`}>
+		<div className={`flex min-h-screen flex-col ${isHome ? "bg-primary" : "bg-background"} text-foreground`}>
 			<Header />
 			<Outlet />
 		</div>

@@ -7,7 +7,7 @@ export default function FavoritesPage() {
 	return (
     <div className="flex flex-col h-full w-full px-4">
       <div className="w-full max-w-5xl mx-auto py-6">
-        <div className="space-y-6 animate-in fade-in slide-in-from-top-4 duration-700">
+        <div className="space-y-6">
           <div className="space-y-1">
             <h1 className="text-3xl font-bold tracking-tight">Your Favorites</h1>
             <p className="text-muted-foreground">Keep track of the characters and films you love most.</p>
