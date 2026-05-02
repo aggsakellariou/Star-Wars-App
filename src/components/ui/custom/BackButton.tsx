@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface BackButtonProps {
   to: string;
@@ -9,15 +8,12 @@ interface BackButtonProps {
 
 export function BackButton({ to, label }: BackButtonProps) {
   return (
-    <Button 
-      variant="outline" 
-      className="border-[5px] border-secondary bg-primary text-secondary hover:bg-secondary hover:text-primary hover:border-primary font-display text-xl px-6 py-4 h-auto uppercase rounded-none transition-all group w-fit"
-      render={<Link to={to} />}
+    <Link 
+      to={to} 
+      className="h-10 px-6 inline-flex items-center gap-2 bg-secondary text-primary border-[3px] border-secondary hover:bg-primary hover:text-secondary transition-colors font-display text-sm uppercase cursor-pointer w-fit group"
     >
-      <div className="flex items-center gap-3">
-        <ChevronLeft className="h-6 w-6 transition-transform group-hover:-translate-x-1" />
-        <span>{label}</span>
-      </div>
-    </Button>
+      <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+      <span>{label}</span>
+    </Link>
   );
 }

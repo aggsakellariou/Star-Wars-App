@@ -1,5 +1,6 @@
 import type { Film } from "./FilmColumns";
 import { Link } from "react-router-dom";
+import { formatDate } from "@/lib/utils";
 
 const idOf = (film: Film) => film.url.split("/").filter(Boolean).pop();
 
@@ -11,7 +12,7 @@ export function FilmCard({ film }: { film: Film }) {
         <div className="font-display text-5xl px-4 py-2 leading-none">{film.episode_id}</div>
         <div className="flex-1 border-l-[5px] border-secondary group-hover:border-primary p-3 flex flex-col justify-between">
           <span className="font-mono-sw text-[10px]">EPISODE</span>
-          <span className="font-mono-sw text-xs">{film.release_date}</span>
+          <span className="font-mono-sw text-xs">{formatDate(film.release_date)}</span>
         </div>
       </div>
       <div className="p-4">

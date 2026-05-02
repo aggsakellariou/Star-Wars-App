@@ -30,7 +30,6 @@ export default function FilmDetailPage() {
       <div className="w-full max-w-5xl mx-auto py-6">
         <div className="space-y-8">
           <BackButton to="/films" label="Back to Films" />
-
           <FilmDetail film={data} />
         </div>
       </div>
