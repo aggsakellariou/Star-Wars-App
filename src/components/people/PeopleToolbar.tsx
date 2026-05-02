@@ -69,15 +69,17 @@ export function PeopleToolbar<TData>({
   );
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Input
-        placeholder={searchPlaceholder}
-        value={search}
-        onChange={(event) => {
-          onSearchChange(event.target.value);
-        }}
-        className="h-8 flex-1 min-w-[200px]"
-      />
+    <div className="flex flex-wrap items-center gap-4 bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] p-4 border-[5px] border-[hsl(var(--sw-bg))]">
+      <div className="flex-1 min-w-[200px] relative">
+        <Input
+          placeholder={searchPlaceholder}
+          value={search}
+          onChange={(event) => {
+            onSearchChange(event.target.value);
+          }}
+          className="h-10 bg-transparent text-[hsl(var(--sw-bg))] border-[3px] border-[hsl(var(--sw-bg))] rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-[hsl(var(--sw-bg))/60] font-mono-sw text-xs uppercase px-4"
+        />
+      </div>
       <div className="flex flex-wrap items-center gap-2">{filters}</div>
     </div>
   );

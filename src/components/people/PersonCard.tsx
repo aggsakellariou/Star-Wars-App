@@ -1,47 +1,34 @@
 import type { Person } from "@/components/people/PeopleColumns";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { User, Calendar, Ruler, Weight, Clapperboard } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export function PersonCard({ person }: { person: Person }) {
-  const id = person.url.split("/").filter(Boolean).pop();
+const idOf = (person: Person) => person.url.split("/").filter(Boolean).pop();
+const ageOf = (person: Person) => {
+  if (person.birth_year === "unknown") return "??";
+  return person.birth_year.replace("BBY", "");
+};
 
+export function PersonCard({ person }: { person: Person }) {
+  const id = idOf(person);
   return (
-    <Link to={`/people/${id}`} className="block">
-      <Card className="group overflow-hidden border-primary/10 bg-card/50 backdrop-blur-sm transition-all hover:border-primary/30 hover:shadow-lg">
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <Badge variant="outline" className="capitalize text-[10px]">
-              {person.gender}
-            </Badge>
-            <User className="h-4 w-4 text-primary/40 transition-colors group-hover:text-primary" />
-          </div>
-          <CardTitle className="line-clamp-1 text-lg">{person.name}</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-3 text-sm">
-          <div className="flex items-center justify-between text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-3.5 w-3.5" />
-              <span>Age: {person.birth_year === "unknown" ? "Unknown" : person.birth_year.replace(/[^0-9.]/g, "")}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clapperboard className="h-3.5 w-3.5" />
-              <span>{person.films.length} films</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="flex items-center gap-2 rounded-md bg-primary/5 p-2 transition-colors group-hover:bg-primary/10">
-              <Ruler className="h-3.5 w-3.5 text-primary" />
-              <span className="font-medium">{person.height}cm</span>
-            </div>
-            <div className="flex items-center gap-2 rounded-md bg-primary/5 p-2 transition-colors group-hover:bg-primary/10">
-              <Weight className="h-3.5 w-3.5 text-primary" />
-              <span className="font-medium">{person.mass}kg</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <Link to={`/characters/${id}`} className="block bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] border-[5px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-bg))] hover:text-[hsl(var(--sw-yellow))] transition group">
+      <div className="px-4 py-2 border-b-[5px] border-[hsl(var(--sw-bg))] group-hover:border-[hsl(var(--sw-yellow))] font-mono-sw text-[10px] uppercase flex justify-between">
+        <span>{person.gender}</span><span>{ageOf(person)} BBY</span>
+      </div>
+      <h3 className="font-display text-3xl uppercase leading-none p-4">{person.name}</h3>
+      <div className="grid grid-cols-3 border-t-[5px] border-[hsl(var(--sw-bg))] group-hover:border-[hsl(var(--sw-yellow))]">
+        <div className="p-2 border-r-[5px] border-[hsl(var(--sw-bg))] group-hover:border-[hsl(var(--sw-yellow))] text-center min-w-0">
+          <div className="font-mono-sw text-[9px]">HGT</div>
+          <div className="font-display truncate">{person.height === "unknown" ? "??" : person.height}</div>
+        </div>
+        <div className="p-2 border-r-[5px] border-[hsl(var(--sw-bg))] group-hover:border-[hsl(var(--sw-yellow))] text-center min-w-0">
+          <div className="font-mono-sw text-[9px]">MASS</div>
+          <div className="font-display truncate">{person.mass === "unknown" ? "??" : person.mass}</div>
+        </div>
+        <div className="p-2 text-center min-w-0">
+          <div className="font-mono-sw text-[9px]">FILMS</div>
+          <div className="font-display truncate">{person.films.length}</div>
+        </div>
+      </div>
     </Link>
   );
 }

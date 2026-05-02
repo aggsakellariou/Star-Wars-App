@@ -43,30 +43,30 @@ export function ThemeToggle() {
   const currentTheme = resolvedTheme || theme
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
+    <button
       onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-      className="group relative size-9 cursor-pointer visible animate-in fade-in duration-200 hover:bg-black/5 dark:hover:bg-white/10"
+      className="group relative size-10 cursor-pointer flex items-center justify-center transition-colors border-[3px] border-transparent hover:border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-bg))] hover:text-[hsl(var(--sw-yellow))]"
       aria-label={`Switch to ${currentTheme === "dark" ? "light" : "dark"} mode`}
     >
-      <Sun
-        className={cn(
-          "size-4 transition-all duration-300",
-          currentTheme === "dark"
-            ? "scale-0 -rotate-90 opacity-0"
-            : "scale-100 rotate-0 opacity-100"
-        )}
-      />
-      <Moon
-        className={cn(
-          "absolute size-4 transition-all duration-300",
-          currentTheme === "dark"
-            ? "scale-100 rotate-0 opacity-100"
-            : "scale-0 rotate-90 opacity-0"
-        )}
-      />
+      <div className="relative size-5 flex items-center justify-center">
+        <Sun
+          className={cn(
+            "size-full transition-all duration-300 absolute",
+            currentTheme === "dark"
+              ? "scale-0 -rotate-90 opacity-0"
+              : "scale-100 rotate-0 opacity-100"
+          )}
+        />
+        <Moon
+          className={cn(
+            "size-full transition-all duration-300 absolute",
+            currentTheme === "dark"
+              ? "scale-100 rotate-0 opacity-100"
+              : "scale-0 rotate-90 opacity-0"
+          )}
+        />
+      </div>
       <span className="sr-only">Toggle theme</span>
-    </Button>
+    </button>
   )
 }

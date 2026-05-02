@@ -82,13 +82,13 @@ export function SelectorPopover<T = string>({
           />
         }
       />
-      <PopoverContent className="w-[250px] p-0" align="start">
-        <Command>
-          <div className="hidden md:block">
-            <CommandInput placeholder={title} />
+      <PopoverContent className="w-[250px] p-0 bg-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] rounded-none" align="start">
+        <Command className="bg-transparent">
+          <div className="hidden md:block border-b-[3px] border-[hsl(var(--sw-bg))]">
+            <CommandInput placeholder={title} className="bg-transparent text-[hsl(var(--sw-bg))] font-display placeholder:text-[hsl(var(--sw-bg))/50]" />
           </div>
-          <CommandList>
-            <CommandEmpty>{emptyMessage}</CommandEmpty>
+          <CommandList className="max-h-[300px]">
+            <CommandEmpty className="py-6 text-center text-xs font-mono-sw uppercase">{emptyMessage}</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
                 const isSelected = selectedArray.includes(option.value);
@@ -96,31 +96,31 @@ export function SelectorPopover<T = string>({
                 return (
                   <CommandItem
                     key={String(option.value)}
-                    className="hover:cursor-pointer"
+                    className="flex items-center px-3 py-2 hover:cursor-pointer aria-selected:bg-[hsl(var(--sw-bg))] aria-selected:text-[hsl(var(--sw-yellow))] transition-colors group"
                     disabled={isDisabled}
                     onSelect={() => !isDisabled && handleSelect(option.value)}
                   >
                     <div
                       className={cn(
-                        "flex size-4 items-center justify-center rounded-[4px] border mr-2",
+                        "flex size-4 items-center justify-center border-2 border-[hsl(var(--sw-bg))] mr-3 transition-colors",
                         isSelected
-                          ? "bg-primary border-primary text-primary-foreground"
-                          : "border-input [&_svg]:invisible",
+                          ? "bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))]"
+                          : "bg-transparent text-transparent group-aria-selected:border-[hsl(var(--sw-yellow))]",
                       )}
                     >
-                      <Check className="!text-primary-foreground size-3.5" />
+                      <Check className="size-3 stroke-[3px]" />
                     </div>
 
                     {renderOption ? (
                       renderOption(option)
                     ) : (
-                      <span className="truncate flex-1 min-w-0">
+                      <span className="truncate flex-1 min-w-0 font-mono-sw text-xs uppercase">
                         {formatLabel ? formatLabel(option) : option.label}
                       </span>
                     )}
 
                     {option.count !== undefined && (
-                      <span className="text-muted-foreground ml-auto flex items-center justify-center font-mono text-xs">
+                      <span className="ml-auto font-display text-[10px]">
                         {option.count}
                       </span>
                     )}
@@ -129,16 +129,16 @@ export function SelectorPopover<T = string>({
               })}
             </CommandGroup>
             {selectedCount > 0 && (
-              <>
+              <div className="border-t-[3px] border-[hsl(var(--sw-bg))]">
                 <CommandGroup>
                   <CommandItem
                     onSelect={handleClear}
-                    className="items-center justify-center hover:cursor-pointer hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30 dark:hover:text-red-400 transition-colors [&_svg]:hidden"
+                    className="flex items-center justify-center px-3 py-3 font-display text-xs uppercase hover:cursor-pointer aria-selected:bg-[hsl(var(--sw-bg))] aria-selected:text-[hsl(var(--sw-yellow))] transition-colors"
                   >
                     Clear filters
                   </CommandItem>
                 </CommandGroup>
-              </>
+              </div>
             )}
           </CommandList>
         </Command>

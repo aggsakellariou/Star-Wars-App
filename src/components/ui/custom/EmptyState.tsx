@@ -19,26 +19,26 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center py-20 border-2 border-dashed rounded-3xl bg-muted/30 space-y-4 animate-in fade-in zoom-in-95 duration-500",
+        "flex flex-col items-center justify-center py-20 bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] border-[5px] border-[hsl(var(--sw-bg))] space-y-6 animate-in fade-in zoom-in-95 duration-500",
         className
       )}
       {...props}
     >
       {icon && (
-        <div className="p-4 rounded-full bg-muted text-muted-foreground">
+        <div className="p-6 bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))]">
           {icon}
         </div>
       )}
-      <div className="text-center space-y-1">
-        <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
+      <div className="text-center space-y-3">
+        <h3 className="text-3xl font-display uppercase tracking-tight">{title}</h3>
         {description && (
-          <p className="text-muted-foreground max-w-xs mx-auto text-sm leading-relaxed">
+          <p className="text-[hsl(var(--sw-bg))/80] max-w-sm mx-auto text-sm font-mono-sw uppercase leading-relaxed">
             {description}
           </p>
         )}
       </div>
       {action && (
-        <div className="pt-2">
+        <div className="pt-4">
           {action}
         </div>
       )}

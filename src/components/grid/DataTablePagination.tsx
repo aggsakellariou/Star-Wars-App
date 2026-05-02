@@ -11,7 +11,6 @@ import {
   CheckIcon,
 } from "lucide-react";
 
-import { CustomButton } from "@/components/ui/custom/custom-button";
 import {
   Popover,
   PopoverTrigger,
@@ -61,38 +60,34 @@ export function DataTablePagination<TData>({
   const pageCount = table.getPageCount();
 
   return (
-    <div className="flex items-center justify-between px-2 py-4">
-      {/* Left: rows per page selector (label hidden on mobile) */}
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] border-[5px] border-[hsl(var(--sw-bg))] p-4 font-mono-sw text-[10px] uppercase">
+      {/* Left: rows per page selector */}
       <div className="flex items-center gap-x-4">
-        <p className="text-sm font-medium hidden sm:block">
-          Rows per page
-        </p>
+        <span className="font-bold">Rows per page</span>
         <Popover>
           <PopoverTrigger
             render={
-              <CustomButton
-                variant="gray"
-                size="sm"
-                className="h-8 w-[70px] hover:cursor-pointer"
+              <button
+                className="h-8 w-[70px] bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-yellow))] hover:text-[hsl(var(--sw-bg))] transition-colors flex items-center justify-center gap-1 font-display text-sm cursor-pointer"
               >
                 {pageSize}
-                <ChevronDown className="ml-2 h-3 w-3" />
-              </CustomButton>
+                <ChevronDown className="h-3 w-3" />
+              </button>
             }
           />
-          <PopoverContent side="top" align="start" className="w-[100px] p-1">
-            <div className="flex flex-col gap-0.5">
+          <PopoverContent side="top" align="start" className="w-[100px] p-0 bg-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] rounded-none">
+            <div className="flex flex-col">
               {pageSizeOptions.map((size) => (
                 <button
                   key={size}
                   onClick={() => table.setPageSize(size)}
                   className={cn(
-                    "relative flex w-full cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-sm outline-none select-none hover:bg-accent hover:text-accent-foreground transition-colors",
-                    pageSize === size && "bg-accent/50 font-medium"
+                    "flex w-full cursor-pointer items-center justify-between px-3 py-2 text-xs font-mono-sw uppercase hover:bg-[hsl(var(--sw-bg))] hover:text-[hsl(var(--sw-yellow))] transition-colors",
+                    pageSize === size && "bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))]"
                   )}
                 >
                   <span>{size}</span>
-                  {pageSize === size && <CheckIcon className="size-4 ml-2" />}
+                  {pageSize === size && <CheckIcon className="size-3" />}
                 </button>
               ))}
             </div>
@@ -100,53 +95,41 @@ export function DataTablePagination<TData>({
         </Popover>
       </div>
 
-      {/* Right: page info and navigation buttons */}
-      <div className="flex items-center gap-x-4">
-        <div className="hidden md:flex items-center justify-center text-sm font-medium">
-          Page {currentPage} of {pageCount}
-        </div>
-        <div className="flex items-center space-x-2">
-          <CustomButton
-            variant="gray"
-            size="icon"
-            className="hidden h-8 w-8 p-0 sm:flex hover:cursor-pointer"
-            onClick={() => goToPage(1)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to first page</span>
-            <ChevronsLeft className="h-4 w-4" />
-          </CustomButton>
-          <CustomButton
-            variant="gray"
-            size="icon"
-            className="h-8 w-8 p-0 hover:cursor-pointer"
-            onClick={() => goToPage(currentPage - 1)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to previous page</span>
-            <ChevronLeft className="h-4 w-4" />
-          </CustomButton>
-          <CustomButton
-            variant="gray"
-            size="icon"
-            className="h-8 w-8 p-0 hover:cursor-pointer"
-            onClick={() => goToPage(currentPage + 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to next page</span>
-            <ChevronRight className="h-4 w-4" />
-          </CustomButton>
-          <CustomButton
-            variant="gray"
-            size="icon"
-            className="hidden h-8 w-8 p-0 sm:flex hover:cursor-pointer"
-            onClick={() => goToPage(pageCount)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            <ChevronsRight className="h-4 w-4" />
-          </CustomButton>
-        </div>
+      {/* Center: page info */}
+      <div className="font-display text-base tracking-tight">
+        Page {currentPage} of {pageCount}
+      </div>
+
+      {/* Right: navigation buttons */}
+      <div className="flex items-center space-x-2">
+        <button
+          className="h-8 w-8 bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-yellow))] hover:text-[hsl(var(--sw-bg))] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center cursor-pointer"
+          onClick={() => goToPage(1)}
+          disabled={!table.getCanPreviousPage()}
+        >
+          <ChevronsLeft className="h-4 w-4" />
+        </button>
+        <button
+          className="h-8 w-8 bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-yellow))] hover:text-[hsl(var(--sw-bg))] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center cursor-pointer"
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={!table.getCanPreviousPage()}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </button>
+        <button
+          className="h-8 w-8 bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-yellow))] hover:text-[hsl(var(--sw-bg))] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center cursor-pointer"
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={!table.getCanNextPage()}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </button>
+        <button
+          className="h-8 w-8 bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-yellow))] hover:text-[hsl(var(--sw-bg))] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center cursor-pointer"
+          onClick={() => goToPage(pageCount)}
+          disabled={!table.getCanNextPage()}
+        >
+          <ChevronsRight className="h-4 w-4" />
+        </button>
       </div>
     </div>
   );

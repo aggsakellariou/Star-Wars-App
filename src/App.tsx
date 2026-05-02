@@ -22,9 +22,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="people" element={<PeoplePage />} />
+          <Route path="characters" element={<PeoplePage />} />
           <Route path="films" element={<FilmPage />} />
-          <Route path="people/:id" element={<DetailPage type="people" />} />
+          <Route path="characters/:id" element={<DetailPage type="characters" />} />
           <Route path="films/:id" element={<DetailPage type="films" />} />
           <Route path="favorites" element={<FavoritesPage />} />
           {/* Catch-all redirect to Home */}

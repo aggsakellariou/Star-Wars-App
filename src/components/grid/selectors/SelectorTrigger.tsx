@@ -2,8 +2,6 @@
 
 import { CirclePlus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CustomButton } from "@/components/ui/custom/custom-button";
-import { Badge } from "@/components/ui/badge";
 import type { SelectorOption } from "./SelectorPopover";
 
 interface SelectorTriggerProps<
@@ -27,49 +25,40 @@ export function SelectorTrigger<T = string>({
   const selectedCount = selectedOptions.length;
 
   return (
-    <CustomButton
-      variant="gray"
-      size="sm"
+    <button
       data-testid={triggerTestId}
       disabled={disabled}
       className={cn(
-        "h-8 border-dashed hover:cursor-pointer transition-colors",
+        "h-8 px-3 bg-[hsl(var(--sw-bg))] text-[hsl(var(--sw-yellow))] border-[3px] border-[hsl(var(--sw-bg))] hover:bg-[hsl(var(--sw-yellow))] hover:text-[hsl(var(--sw-bg))] transition-colors flex items-center gap-2 font-display text-xs uppercase cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
         className,
       )}
       {...props}
     >
-      <CirclePlus className="mr-2 h-4 w-4" />
+      <CirclePlus className="h-4 w-4" />
       <span>{title}</span>
       {selectedCount > 0 && (
         <div className="flex items-center gap-1 ml-1">
-          <Badge
-            variant="secondary"
-            className="rounded-sm px-1 font-normal lg:hidden bg-zinc-200/80 text-zinc-900 dark:bg-secondary dark:text-secondary-foreground"
-          >
-            {selectedCount}
-          </Badge>
-          <div className="hidden gap-1 lg:flex">
-            {selectedCount > 2 ? (
-              <Badge
-                variant="secondary"
-                className="rounded-sm px-1 font-normal bg-zinc-200/80 text-zinc-900 dark:bg-secondary dark:text-secondary-foreground"
-              >
-                {selectedCount} selected
-              </Badge>
+          <div className="hidden lg:flex gap-1">
+            {selectedCount > 1 ? (
+              <span className="bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] px-1 font-mono-sw text-[9px] border border-[hsl(var(--sw-bg))]">
+                {selectedCount}
+              </span>
             ) : (
               selectedOptions.map((option) => (
-                <Badge
+                <span
                   key={String(option.value)}
-                  variant="secondary"
-                  className="rounded-sm px-1 font-normal bg-zinc-200/80 text-zinc-900 dark:bg-secondary dark:text-secondary-foreground"
+                  className="bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] px-1 font-mono-sw text-[9px] border border-[hsl(var(--sw-bg))]"
                 >
                   {formatLabel ? formatLabel(option) : option.label}
-                </Badge>
+                </span>
               ))
             )}
           </div>
+          <span className="lg:hidden bg-[hsl(var(--sw-yellow))] text-[hsl(var(--sw-bg))] px-1 font-mono-sw text-[9px] border border-[hsl(var(--sw-bg))]">
+            {selectedCount}
+          </span>
         </div>
       )}
-    </CustomButton>
+    </button>
   );
 }

@@ -1,22 +1,24 @@
-import { Users, Clapperboard, Heart } from "lucide-react";
+import { Users, Film, Heart } from "lucide-react";
+
+export const APP_SUBTITLE = "Discover characters, films, and starships from a galaxy far, far away. Save your favorites and dive into the lore.";
 
 export const navLinks = [
   {
     label: "Characters",
-    href: "/people",
+    href: "/characters",
     icon: Users,
-    description: "Explore the galaxy's characters.",
+    description: "Detailed profiles of iconic heroes and villains.",
   },
   {
     label: "Films",
     href: "/films",
-    icon: Clapperboard,
-    description: "Browse Star Wars movies.",
+    icon: Film,
+    description: "Explore the saga through its legendary cinematic history.",
   },
   {
     label: "Favorites",
     href: "/favorites",
     icon: Heart,
-    description: "Your collection.",
+    description: "Keep track of the characters and films you love most.",
   },
 ];
