@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { PeopleGrid } from "@/components/people/PeopleGrid";
 import { usePeople } from "@/hooks/use-swapi";
 import { useDebounce } from "use-debounce";
 import { ListPageContainer } from "@/components/layout/ListPageContainer";
+import { useGridStore } from "@/hooks/use-grid-store";
+import { PeopleGrid } from "@/components/people/PeopleGrid";
 
 export default function PeoplePage() {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [search, setSearch] = useState("");
+  const { people, updatePeople } = useGridStore();
+  const { page, pageSize, search } = people;
+  
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data, isLoading, isError, isPlaceholderData, refetch } = usePeople(
@@ -17,13 +17,15 @@ export default function PeoplePage() {
   );
 
   const handlePageSizeChange = (size: number) => {
-    setPageSize(size);
-    setPage(1); // Reset to first page when page size changes
+    updatePeople({ pageSize: size, page: 1 });
   };
 
   const handleSearch = (val: string) => {
-    setSearch(val);
-    setPage(1);
+    updatePeople({ search: val, page: 1 });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    updatePeople({ page: newPage });
   };
 
   return (
@@ -39,7 +41,7 @@ export default function PeoplePage() {
         rowCount={data?.count || 0}
         page={page}
         pageSize={pageSize}
-        onPageChange={setPage}
+        onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
         onSearchChange={handleSearch}
         search={search}

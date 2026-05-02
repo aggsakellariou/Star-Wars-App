@@ -4,6 +4,7 @@ import { FilmDetail } from "@/components/films/FilmDetail";
 import { DetailSkeleton } from "@/components/ui/custom/Skeletons";
 import { DetailErrorState } from "@/components/ui/custom/ErrorStates";
 import { BackButton } from "@/components/ui/custom/BackButton";
+import { FavoriteButton } from "@/components/ui/custom/FavoriteButton";
 
 export default function FilmDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -29,7 +30,18 @@ export default function FilmDetailPage() {
     <div className="flex flex-col h-full w-full px-4">
       <div className="w-full max-w-5xl mx-auto py-6">
         <div className="space-y-8">
-          <BackButton to="/films" label="Back to Films" />
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <BackButton to="/films" label="Back to Films" />
+            <FavoriteButton 
+              item={{
+                id: id!,
+                type: 'film',
+                name: data.title,
+                subtitle: `Released: ${data.release_date}`,
+                url: data.url
+              }} 
+            />
+          </div>
           <FilmDetail film={data} />
         </div>
       </div>

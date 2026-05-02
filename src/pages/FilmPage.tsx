@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { FilmGrid } from "@/components/films/FilmGrid";
 import { useFilms } from "@/hooks/use-swapi";
 import { useDebounce } from "use-debounce";
 import { ListPageContainer } from "@/components/layout/ListPageContainer";
+import { useGridStore } from "@/hooks/use-grid-store";
+import { FilmGrid } from "@/components/films/FilmGrid";
 
 export default function FilmPage() {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [search, setSearch] = useState("");
+  const { films, updateFilms } = useGridStore();
+  const { page, pageSize, search } = films;
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data, isLoading, isError, isPlaceholderData, refetch } = useFilms(
@@ -17,13 +16,15 @@ export default function FilmPage() {
   );
 
   const handlePageSizeChange = (size: number) => {
-    setPageSize(size);
-    setPage(1); // Reset to first page when page size changes
+    updateFilms({ pageSize: size, page: 1 });
   };
 
   const handleSearch = (val: string) => {
-    setSearch(val);
-    setPage(1);
+    updateFilms({ search: val, page: 1 });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    updateFilms({ page: newPage });
   };
 
   return (
@@ -39,7 +40,7 @@ export default function FilmPage() {
         rowCount={data?.count || 0}
         page={page}
         pageSize={pageSize}
-        onPageChange={setPage}
+        onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
         onSearchChange={handleSearch}
         search={search}
