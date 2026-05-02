@@ -13,7 +13,7 @@ export function Header() {
 					className="p-1 hover:bg-secondary hover:text-primary transition-colors"
 					to="/"
 				>
-					<Logo className="h-6" />
+					<Logo />
 				</Link>
 				<div className="hidden flex-1 items-center justify-center gap-8 md:flex">
 					{navLinks.map((link) => (

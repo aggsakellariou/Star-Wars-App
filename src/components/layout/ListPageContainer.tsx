@@ -24,7 +24,7 @@ export function ListPageContainer({
       <div className="w-full max-w-5xl mx-auto py-6">
         <div className="space-y-6">
           <div className="space-y-1 bg-primary text-secondary p-6 border-[5px] border-secondary">
-            <h1 className="text-5xl font-display uppercase tracking-tighter">{title}</h1>
+            <h1 className="text-5xl font-display uppercase tracking-tight">{title}</h1>
             <p className="font-mono-sw text-xs uppercase opacity-80">{description}</p>
           </div>
 
