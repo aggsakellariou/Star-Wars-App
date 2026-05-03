@@ -18,11 +18,11 @@ export function DataTableResetFilter({
     <button
       onClick={onReset}
       className={cn(
-        "h-8 px-3 bg-secondary text-[hsl(var(--destructive,0_100%_50%))] border-[3px] border-secondary hover:bg-[hsl(var(--destructive,0_100%_50%))] hover:text-secondary transition-colors flex items-center gap-2 font-display text-xs uppercase cursor-pointer",
+        "h-10 px-8 bg-transparent text-secondary border-[3px] border-secondary hover:bg-secondary hover:text-primary transition-colors flex items-center gap-2 font-mono-sw text-xs font-bold uppercase cursor-pointer shrink-0",
         className
       )}
     >
-      <RotateCcw className="h-4 w-4" />
+      <RotateCcw className="h-3.5 w-3.5" />
       Reset
     </button>
   );

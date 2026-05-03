@@ -18,13 +18,15 @@ export default function CharacterDetailPage() {
     );
   }
 
-  if (isError || !id) {
+  if (isError || !id || !data) {
     return (
       <div className="flex flex-col h-full w-full px-4">
         <DetailErrorState type="character" returnPath="/characters" />
       </div>
     );
   }
+
+  const character = data;
 
   return (
     <div className="flex flex-col h-full w-full px-4">
@@ -36,14 +38,14 @@ export default function CharacterDetailPage() {
               item={{
                 id: id!,
                 type: 'character',
-                name: data.name,
-                subtitle: data.speciesNames?.[0] || 'Unknown Species',
-                url: data.url
+                name: character.name,
+                subtitle: character.speciesNames?.[0] || 'Unknown Species',
+                url: character.url
               }} 
             />
           </div>
 
-          <PersonDetail person={data} />
+          <PersonDetail person={character} />
         </div>
       </div>
     </div>

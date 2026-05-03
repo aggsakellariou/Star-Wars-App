@@ -17,7 +17,6 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -130,24 +129,6 @@ export function DataTablePagination<TData>({
         >
           <ChevronsRight className="h-4 w-4" />
         </button>
-      </div>
-    </div>
-  );
-}
-
-export function PaginationSkeleton() {
-  return (
-    <div className="flex items-center justify-between px-2 py-4">
-      <div className="flex items-center space-x-2">
-        <Skeleton className="h-4 w-24 hidden sm:block" />
-        <Skeleton className="h-8 w-[70px]" />
-      </div>
-      <div className="flex items-center space-x-2">
-        <Skeleton className="h-4 w-20 hidden md:block" />
-        <Skeleton className="h-8 w-8 hidden sm:block" />
-        <Skeleton className="h-8 w-8" />
-        <Skeleton className="h-8 w-8" />
-        <Skeleton className="h-8 w-8 hidden sm:block" />
       </div>
     </div>
   );

@@ -18,13 +18,15 @@ export default function FilmDetailPage() {
     );
   }
 
-  if (isError || !id) {
+  if (isError || !id || !data) {
     return (
       <div className="flex flex-col h-full w-full px-4">
         <DetailErrorState type="film" returnPath="/films" />
       </div>
     );
   }
+
+  const filmData = data;
 
   return (
     <div className="flex flex-col h-full w-full px-4">
@@ -36,13 +38,13 @@ export default function FilmDetailPage() {
               item={{
                 id: id!,
                 type: 'film',
-                name: data.title,
-                subtitle: `Released: ${data.release_date}`,
-                url: data.url
+                name: filmData.title,
+                subtitle: `Released: ${filmData.release_date}`,
+                url: filmData.url
               }} 
             />
           </div>
-          <FilmDetail film={data} />
+          <FilmDetail film={filmData} />
         </div>
       </div>
     </div>

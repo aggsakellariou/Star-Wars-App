@@ -115,16 +115,7 @@ function ResourceSection({
               {name}
             </span>
           ))
-        ) : (
-          <div className="animate-pulse flex gap-2">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="h-6 w-24 bg-secondary/10 border-2 border-secondary"
-              />
-            ))}
-          </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

@@ -72,13 +72,7 @@ function ResourceSection({ title, items, total }: { title: string, items: string
               {name}
             </span>
           ))
-        ) : total > 0 ? (
-          <div className="animate-pulse flex gap-2">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="h-6 w-24 bg-secondary/10 border-2 border-secondary" />
-            ))}
-          </div>
-        ) : (
+        ) : total > 0 ? null : (
           <span className="text-xs opacity-50 font-mono-sw">NONE</span>
         )}
       </div>
