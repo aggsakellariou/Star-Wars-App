@@ -101,29 +101,68 @@ const request = async <T>(urlOrPath: string, params?: Record<string, unknown>): 
   }
 };
 
+/**
+ * Internal helper to fetch multiple pages from SWAPI to satisfy a larger pageSize
+ */
+async function fetchMultiPage<T>(
+  endpoint: string,
+  page: number,
+  search: string,
+  pageSize: number
+): Promise<SwapiResponse<T>> {
+  const apiPagesToFetch = Math.ceil(pageSize / 10);
+  const startApiPage = (page - 1) * apiPagesToFetch + 1;
+
+  // 1. Fetch the first page to get the total count
+  const firstResponse = await request<SwapiResponse<T>>(endpoint, { 
+    page: startApiPage, 
+    search 
+  });
+
+  const totalCount = firstResponse.count;
+  const results = [...firstResponse.results];
+
+  // 2. Calculate how many more pages we actually NEED based on the count
+  // We already have 10 (or less) items from the first request.
+  // We need to fetch pages until we either hit the pageSize OR the totalCount.
+  const remainingToFetch = Math.min(pageSize, totalCount - (startApiPage - 1) * 10) - firstResponse.results.length;
+  
+  if (remainingToFetch <= 0) {
+    return firstResponse;
+  }
+
+  const additionalPagesNeeded = Math.ceil(remainingToFetch / 10);
+  const apiPagePromises = [];
+
+  for (let i = 1; i <= additionalPagesNeeded; i++) {
+    const nextApiPage = startApiPage + i;
+    // Safety check: don't fetch if the page is beyond the total count
+    if ((nextApiPage - 1) * 10 < totalCount) {
+      apiPagePromises.push(
+        request<SwapiResponse<T>>(endpoint, { page: nextApiPage, search })
+      );
+    }
+  }
+
+  if (apiPagePromises.length > 0) {
+    const additionalResponses = await Promise.all(apiPagePromises);
+    additionalResponses.forEach(r => results.push(...r.results));
+  }
+
+  return {
+    count: totalCount,
+    next: results.length < totalCount ? "has-more" : null, // Simplified next indicator
+    previous: firstResponse.previous,
+    results: results.slice(0, pageSize),
+  };
+}
+
 export const fetchPeople = async (
   page = 1, 
   search = "", 
   pageSize = 10
 ): Promise<SwapiResponse<Person>> => {
-  const apiPagesToFetch = Math.ceil(pageSize / 10);
-  const startApiPage = (page - 1) * apiPagesToFetch + 1;
-  
-  const apiPagePromises = [];
-  for (let i = 0; i < apiPagesToFetch; i++) {
-    apiPagePromises.push(
-      request<SwapiResponse<Person>>("/people", { page: startApiPage + i, search })
-    );
-  }
-
-  const responses = await Promise.all(apiPagePromises);
-  
-  return {
-    count: responses[0].count,
-    next: responses[responses.length - 1].next,
-    previous: responses[0].previous,
-    results: responses.flatMap(r => r.results),
-  };
+  return fetchMultiPage<Person>("/people", page, search, pageSize);
 };
 
 export const fetchFilms = async (
@@ -131,24 +170,7 @@ export const fetchFilms = async (
   search = "", 
   pageSize = 10
 ): Promise<SwapiResponse<Film>> => {
-  const apiPagesToFetch = Math.ceil(pageSize / 10);
-  const startApiPage = (page - 1) * apiPagesToFetch + 1;
-  
-  const apiPagePromises = [];
-  for (let i = 0; i < apiPagesToFetch; i++) {
-    apiPagePromises.push(
-      request<SwapiResponse<Film>>("/films", { page: startApiPage + i, search })
-    );
-  }
-
-  const responses = await Promise.all(apiPagePromises);
-  
-  return {
-    count: responses[0].count,
-    next: responses[responses.length - 1].next,
-    previous: responses[0].previous,
-    results: responses.flatMap(r => r.results),
-  };
+  return fetchMultiPage<Film>("/films", page, search, pageSize);
 };
 
 export const fetchPerson = async (id: string): Promise<Person> => {
