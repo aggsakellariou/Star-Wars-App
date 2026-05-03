@@ -147,9 +147,4 @@ body {
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-
-  .text-stroke {
-    -webkit-text-stroke: 3px hsl(var(--sw-secondary));
-    color: transparent;
-  }
 }

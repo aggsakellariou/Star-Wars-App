@@ -10,17 +10,17 @@ export const LogoIcon = ({ className }: React.HTMLAttributes<HTMLDivElement>) =>
 );
 
 export const Logo = ({ className }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex items-center gap-4", className)}>
+  <div className={cn("flex items-center gap-2 min-[400px]:gap-4", className)}>
     <img 
       src="/logo.png" 
       alt="Star Wars Universe Logo" 
-      className="h-10 w-auto object-contain" 
+      className="h-8 min-[400px]:h-10 w-auto object-contain hidden min-[400px]:block" 
     />
-    <div className="flex flex-col border-l-2 border-secondary/30 pl-4 py-1 leading-tight">
-      <span className="font-display text-sm uppercase tracking-[0.2em] font-black">
+    <div className="flex flex-col min-[400px]:border-l-2 border-secondary/30 min-[400px]:pl-4 py-1 leading-none">
+      <span className="font-display text-base uppercase tracking-normal">
         Universe
       </span>
-      <span className="font-mono-sw text-[8px] uppercase tracking-[0.3em] opacity-80">
+      <span className="font-mono-sw text-[10px] uppercase tracking-[0.1em]">
         Explorer
       </span>
     </div>

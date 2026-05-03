@@ -23,50 +23,85 @@ A modern React application built with TypeScript that interacts with the Star Wa
 - **Icons**: Lucide React
 - **Testing**: Vitest & React Testing Library
 
+## Environment Setup
+
+This project does not require any environment variables to run. It connects to the public [SWAPI](https://swapi.dev/) service and includes a built-in fallback mechanism to a mirror ([swapi-api.hbtn.io](https://swapi-api.hbtn.io/)) in case the primary server is down.
+
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- pnpm (recommended) or npm/yarn
+- **Node.js**: v18.0.0 or higher
+- **Package Manager**: [pnpm](https://pnpm.io/) is recommended for faster installations and disk efficiency.
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/aggsakellariou/Star-Wars-App.git
    cd swapi-app
    ```
 
-2. Install dependencies:
+2. **Install dependencies**:
    ```bash
    pnpm install
    ```
 
-3. Run the development server:
-   ```bash
-   pnpm dev
-   ```
+### Running the Application
 
-4. Open your browser to `http://localhost:5173`
+#### Development Mode
+Start the development server with Hot Module Replacement (HMR):
+```bash
+pnpm dev
+```
+The application will be available at `http://localhost:5173`.
 
-### Running Tests
+#### Production Build
+To create an optimized production build:
+```bash
+pnpm build
+```
+The output will be in the `dist` directory.
 
-To run the unit tests:
+#### Preview Production Build
+To preview the production build locally:
+```bash
+pnpm preview
+```
+
+## Testing
+
+The project uses [Vitest](https://vitest.dev/) for unit and integration testing.
+
+### Run Tests
+Execute the full test suite once:
 ```bash
 pnpm test
 ```
 
-To run tests in watch mode:
+### Watch Mode
+Run tests and re-run on file changes:
 ```bash
 pnpm vitest
 ```
 
+### UI Mode
+Launch the Vitest UI for a more interactive testing experience:
+```bash
+pnpm test:ui
+```
+
+### Coverage Reports
+Generate a code coverage report:
+```bash
+pnpm coverage
+```
+
 ## Project Structure
 
-- `src/api`: SWAPI integration using Axios.
-- `src/components`: Reusable UI components (Layout, ResourceCard, etc.).
-- `src/pages`: Main application views (Home, ResourceList, ResourceDetail, Favorites).
-- `src/store`: Zustand store for state management.
-- `src/types`: TypeScript interfaces for API responses and application data.
-- `src/test`: Testing configuration and setup.
+- `src/components`: UI components organized by feature (films, people, layout, etc.).
+- `src/constants`: Configuration and static data.
+- `src/hooks`: Custom React hooks for data fetching and state management (Zustand).
+- `src/lib`: Core logic including API integration and shared utilities.
+- `src/pages`: Main application views and page components.
+- `src/test`: Global testing configuration and test setup.

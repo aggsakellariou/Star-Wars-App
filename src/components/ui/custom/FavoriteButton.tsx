@@ -23,12 +23,7 @@ export function FavoriteButton({ item }: FavoriteButtonProps) {
   return (
     <button
       onClick={handleToggle}
-      className={cn(
-        "h-10 px-6 inline-flex items-center gap-2 transition-colors font-display text-sm uppercase cursor-pointer border-[3px]",
-        favorited 
-          ? "bg-primary text-secondary border-primary hover:bg-secondary hover:text-primary" 
-          : "bg-secondary text-primary border-secondary hover:bg-primary hover:text-secondary"
-      )}
+      className="h-10 px-3 sm:px-6 inline-flex items-center gap-2 transition-colors font-display text-sm uppercase cursor-pointer border-[3px] bg-secondary text-primary border-secondary hover:bg-primary hover:text-secondary"
     >
       <Heart 
         className={cn(
@@ -36,7 +31,7 @@ export function FavoriteButton({ item }: FavoriteButtonProps) {
           favorited && "fill-current"
         )} 
       />
-      <span>{favorited ? "Favorited" : "Add to Favorites"}</span>
+      <span className="hidden sm:inline">{favorited ? "Saved to Collection" : "Add to Favorites"}</span>
     </button>
   );
 }

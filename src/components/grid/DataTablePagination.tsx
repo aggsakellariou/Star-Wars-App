@@ -26,7 +26,6 @@ interface DataTablePaginationProps<TData> {
 }
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [10, 20, 30, 40, 50];
-export const NAVBAR_HEIGHT = 86;
 
 export function DataTablePagination<TData>({
   table,
@@ -34,40 +33,45 @@ export function DataTablePagination<TData>({
   scrollTargetRef,
   toolbarRef,
 }: DataTablePaginationProps<TData>) {
-  const goToPage = (page: number) => {
-    table.setPageIndex(page - 1);
+  const pageIndex = table.getState().pagination.pageIndex;
+  const pageCount = table.getPageCount();
+  const currentPage = pageIndex + 1;
+  const pageSize = table.getState().pagination.pageSize;
+  const isFirstRender = React.useRef(true);
+
+  React.useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     if (typeof window !== "undefined") {
-      const navbarHeight = NAVBAR_HEIGHT;
-      if (toolbarRef?.current) {
-        const elementTop = toolbarRef.current.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementTop - navbarHeight;
+      const target = toolbarRef?.current || scrollTargetRef?.current;
+      if (target) {
+        const elementTop = target.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementTop - 85;
         window.scrollTo({
           top: offsetPosition,
           behavior: "smooth",
         });
-      } else if (scrollTargetRef?.current) {
-        scrollTargetRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
       }
     }
+  }, [pageIndex, toolbarRef, scrollTargetRef]);
+
+  const goToPage = (page: number) => {
+    table.setPageIndex(page - 1);
   };
 
-  const currentPage = table.getState().pagination.pageIndex + 1;
-  const pageSize = table.getState().pagination.pageSize;
-  const pageCount = table.getPageCount();
-
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-primary text-secondary border-[5px] border-secondary p-4 font-mono-sw text-[10px] uppercase">
+    <div className="flex flex-row items-center justify-between gap-4 bg-primary text-secondary border-[5px] border-secondary p-4 font-mono-sw text-[10px] uppercase">
       {/* Left: rows per page selector */}
-      <div className="flex items-center gap-x-4">
-        <span className="font-bold">Rows per page</span>
+      <div className="flex items-center gap-x-2 md:gap-x-4">
+        <span className="font-bold hidden md:inline">Rows per page</span>
         <Popover>
           <PopoverTrigger
             render={
               <button
-                className="h-8 w-[70px] bg-secondary text-primary border-[3px] border-secondary hover:bg-primary hover:text-secondary transition-colors flex items-center justify-center gap-1 font-display text-sm cursor-pointer"
+                className="h-8 w-[60px] md:w-[70px] bg-secondary text-primary border-[3px] border-secondary hover:bg-primary hover:text-secondary transition-colors flex items-center justify-center gap-1 font-display text-sm cursor-pointer"
               >
                 {pageSize}
                 <ChevronDown className="h-3 w-3" />
@@ -95,14 +99,14 @@ export function DataTablePagination<TData>({
       </div>
 
       {/* Center: page info */}
-      <div className="font-display text-base tracking-tight">
+      <div className="font-display text-base tracking-tight hidden sm:block">
         Page {currentPage} of {pageCount}
       </div>
 
       {/* Right: navigation buttons */}
       <div className="flex items-center space-x-2">
         <button
-          className="h-8 w-8 bg-secondary text-primary border-[3px] border-secondary hover:bg-primary hover:text-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center cursor-pointer"
+          className="hidden md:flex h-8 w-8 bg-secondary text-primary border-[3px] border-secondary hover:bg-primary hover:text-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors items-center justify-center cursor-pointer"
           onClick={() => goToPage(1)}
           disabled={!table.getCanPreviousPage()}
         >
@@ -123,7 +127,7 @@ export function DataTablePagination<TData>({
           <ChevronRight className="h-4 w-4" />
         </button>
         <button
-          className="h-8 w-8 bg-secondary text-primary border-[3px] border-secondary hover:bg-primary hover:text-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center cursor-pointer"
+          className="hidden md:flex h-8 w-8 bg-secondary text-primary border-[3px] border-secondary hover:bg-primary hover:text-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors items-center justify-center cursor-pointer"
           onClick={() => goToPage(pageCount)}
           disabled={!table.getCanNextPage()}
         >

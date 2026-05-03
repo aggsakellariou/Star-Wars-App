@@ -11,7 +11,7 @@ export default function Home() {
             <br />
             WARS
             <br />
-            <span className="text-stroke">UNIVERSE</span>
+            UNIVERSE
           </h1>
           <div className="grid md:grid-cols-3 gap-0 border-y-4 border-secondary">
             <p className="md:col-span-3 p-4 text-xl md:text-2xl border-secondary">

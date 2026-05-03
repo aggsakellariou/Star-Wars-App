@@ -21,7 +21,7 @@ export function PeopleToolbar({
           onChange={(event) => {
             onSearchChange(event.target.value);
           }}
-          className="h-10 bg-transparent text-secondary border-[3px] border-secondary rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-secondary/60 font-mono-sw text-xs uppercase px-4"
+          className="h-10 bg-transparent text-secondary border-[3px] border-secondary rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-secondary/60 font-mono-sw text-base md:text-xs uppercase px-4"
         />
         <DataTableResetFilter 
           isFiltered={search.length > 0} 

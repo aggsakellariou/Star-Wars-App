@@ -11,6 +11,7 @@ import { FilmCard } from "./FilmCard"
 import { EmptyState } from "@/components/ui/custom/EmptyState"
 import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useRef } from "react"
 
 interface FilmGridProps {
   data: Film[]
@@ -35,6 +36,7 @@ export function FilmGrid({
   search,
   isLoading 
  }: FilmGridProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
   const table = useReactTable({
     data,
     columns: filmColumns,
@@ -63,7 +65,7 @@ export function FilmGrid({
   })
 
   return (
-    <div className={cn(
+    <div ref={containerRef} className={cn(
       "space-y-4",
       isLoading && "opacity-50 pointer-events-none transition-opacity"
     )}>
@@ -72,7 +74,7 @@ export function FilmGrid({
         onSearchChange={onSearchChange}
       />
       
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 items-start">
+      <div className="grid grid-cols-1 min-[525px]:grid-cols-2 min-[700px]:grid-cols-3 min-[850px]:grid-cols-4 min-[1000px]:grid-cols-5 gap-4 items-start">
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <FilmCard key={row.id} film={row.original} />
@@ -87,7 +89,7 @@ export function FilmGrid({
         )}
       </div>
 
-      <DataTablePagination table={table} pageSizeOptions={[10, 20, 30, 40, 50]} />
+      <DataTablePagination table={table} pageSizeOptions={[10, 20, 30, 40, 50]} scrollTargetRef={containerRef} />
     </div>
   )
 }

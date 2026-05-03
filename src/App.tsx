@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { Toaster } from "sonner";
 import { useTheme } from "next-themes";
 import { Layout } from "@/components/layout/Layout";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { DetailSkeleton } from "@/components/ui/custom/Skeletons";
 
 const Home = lazy(() => import("@/pages/Home"));
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Toaster 
         position="top-right" 
         richColors 

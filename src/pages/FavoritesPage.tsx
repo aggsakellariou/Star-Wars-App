@@ -9,6 +9,9 @@ import { cn } from "@/lib/utils";
 export default function FavoritesPage() {
   const { favorites, toggleFavorite } = useFavorites();
   const [filter, setFilter] = useState<'all' | 'character' | 'film'>('all');
+  const hasCharacters = favorites.some(f => f.type === 'character');
+  const hasFilms = favorites.some(f => f.type === 'film');
+  const showFilters = hasCharacters && hasFilms;
 
   const handleRemove = (item: FavoriteItem) => {
     toggleFavorite(item);
@@ -40,23 +43,25 @@ export default function FavoritesPage() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-0 border-[3px] border-primary bg-primary">
-              {filterItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setFilter(item.id)}
-                  className={cn(
-                    "flex items-center gap-2 px-6 py-3 font-display text-xs uppercase transition-colors border-[2px] border-primary",
-                    filter === item.id 
-                      ? "bg-secondary text-primary" 
-                      : "bg-primary text-secondary hover:bg-secondary/10"
-                  )}
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </button>
-              ))}
-            </div>
+            {showFilters && (
+              <div className="flex flex-wrap gap-0 border-[3px] border-primary bg-primary">
+                {filterItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setFilter(item.id)}
+                    className={cn(
+                      "flex items-center gap-2 px-6 py-3 font-display text-xs uppercase transition-colors border-[2px] border-primary",
+                      filter === item.id 
+                        ? "bg-secondary text-primary" 
+                        : "bg-primary text-secondary hover:bg-secondary/10"
+                    )}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {favorites.length === 0 ? (
@@ -89,12 +94,15 @@ export default function FavoritesPage() {
             />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-[4px] border-secondary bg-secondary">
-              {filteredFavorites.map((item) => (
+              {filteredFavorites.map((item, index) => (
                 <div 
                   key={`${item.type}-${item.id}`} 
-                  className="group bg-primary text-secondary border-[2px] border-secondary p-6 flex items-center gap-6 hover:bg-secondary hover:text-primary transition-all"
+                  className={cn(
+                    "@container group bg-primary text-secondary border-[2px] border-secondary p-6 flex items-center gap-6 hover:bg-secondary hover:text-primary transition-all",
+                    filteredFavorites.length % 2 !== 0 && index === filteredFavorites.length - 1 && "md:col-span-2"
+                  )}
                 >
-                  <div className="h-20 w-20 bg-secondary/10 flex items-center justify-center border-[3px] border-secondary group-hover:border-primary transition-colors">
+                  <div className="h-20 w-20 bg-secondary/10 flex items-center justify-center border-[3px] border-secondary group-hover:border-primary transition-colors hidden @[300px]:flex">
                     <Heart className="h-10 w-10 fill-current opacity-20 group-hover:opacity-100 transition-opacity" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -108,7 +116,7 @@ export default function FavoritesPage() {
                       {item.subtitle}
                     </p>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="flex flex-col @[400px]:flex-row gap-2">
                     <button 
                       onClick={() => handleRemove(item)}
                       className="p-3 border-[3px] border-secondary hover:bg-destructive hover:border-destructive hover:text-white transition-colors group-hover:border-primary"
